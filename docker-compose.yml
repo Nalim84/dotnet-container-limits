@@ -1,0 +1,31 @@
+# Default compose — development mode with limits
+# For specific scenarios use:
+#   docker compose -f docker-compose.no-limits.yml up   (dangerous — demo only)
+#   docker compose -f docker-compose.with-limits.yml up (safe — production pattern)
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: container-limits-demo:latest
+    container_name: container-limits-demo
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+          cpus: "1.0"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    labels:
+        maintainer: "Alex Nalim <linkedin.com/in/alex-nalim"
+        description: "Container limits demo — cgroups in practice"

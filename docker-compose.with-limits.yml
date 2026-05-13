@@ -1,0 +1,49 @@
+# ============================================================
+# WITH LIMITS — cgroups enforced by the kernel
+#
+# WHY this is safe:
+#   Resource limits are translated by Docker into kernel cgroups.
+#   The kernel actively enforces these limits — the container
+#   physically cannot exceed them, protecting other services.
+#
+# Try it:
+#   docker compose -f docker-compose.with-limits.yml up -d
+#   docker stats
+#   POST http://localhost:8081/api/stress/memory?megabytes=200
+#   POST http://localhost:8081/api/stress/cpu?seconds=30&threads=8
+#   Watch 'docker stats' — limits enforced by the kernel
+#   GET  http://localhost:8081/api/info — shows cgroup limits
+# ============================================================
+
+services:
+  api-with-limits:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: container-limits-demo:latest
+    container_name: api-with-limits
+    ports:
+      - "8081:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - MODE=WITH_LIMITS
+
+    # ✅ Resource limits — translated to kernel cgroups by Docker
+    # WHY: Without this, one container can take down production
+    deploy:
+      resources:
+        limits:
+          memory: 256m    # kernel will kill container if exceeded (OOMKilled)
+          cpus: "0.50"    # max 50% of one CPU core
+        reservations:
+          memory: 128m    # guaranteed minimum memory
+          cpus: "0.25"    # guaranteed minimum CPU
+
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8081/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

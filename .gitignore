@@ -1,0 +1,15 @@
+## .NET
+bin/
+obj/
+*.user
+.vs/
+
+## Docker
+.dockerignore
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Logs
+*.log
