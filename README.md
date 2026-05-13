@@ -200,9 +200,9 @@ cgroups provide **multi-tenant isolation** at the kernel level.
 
 ## Related Posts
 
-- [5W2H — The Framework I Use Before Writing a Single Line of Code](#)
-- [What Really Happens When You Type docker run](#)
-- [The Docker Lifecycle — From Build to Remove](#)
+- [5W2H — The Framework I Use Before Writing a Single Line of Code](https://www.linkedin.com/posts/alex-nalim_dotnet-csharp-backendengineering-share-7453153504317206529-pXOR/?rcm=ACoAAAcL7EABqGljRyS6dggI-2EjctbgMF3Gosk)
+- [What Really Happens When You Type docker run](https://www.linkedin.com/posts/alex-nalim_docker-run-ugcPost-7457118825575006208-2Hk2?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAcL7EABqGljRyS6dggI-2EjctbgMF3Gosk)
+- [The Docker Lifecycle — From Build to Remove](https://www.linkedin.com/posts/alex-nalim_docker-lifecycle-ugcPost-7458622170316021760-Nya2?utm_source=share&utm_medium=member_desktop&rcm=ACoAAAcL7EABqGljRyS6dggI-2EjctbgMF3Gosk)
 - [Why a Container Can Take Down Production](#) ← this project
 
 ---
